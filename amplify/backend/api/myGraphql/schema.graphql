@@ -1,0 +1,125 @@
+type Credential @model {
+  user: User! @connection
+  id: ID!
+  credentialName: String!
+  isVerified: Boolean!
+  expierationDate: AWSDate!
+}
+
+type FacilityProfile @model {
+  id: ID!
+  user: User! @connection(name: "FacilityUser")
+  about: String!
+  rating: Float!
+  license: String!
+  jobs: [Job!]! @connection
+  reviews: [Review!]! @connection
+  practiceName: String!
+  isVerified: Boolean!
+}
+
+type ProfessionalProfile @model {
+  id: ID!
+  user: User! @connection(name: "ProfessionalUser")
+  firstName: String!
+  lastName: String!
+  yearsOfExperience: Int!
+  workExperience: [WorkExperience!]!
+  education: [Education!]!
+  rating: Float!
+  credentials: [Credential!]!
+  jobs: [Job!]! @connection
+  reviews: [Review!]! @connection
+  isVerified: Boolean!
+  specialties: [String!]!
+}
+
+type Education {
+  id: ID!
+  school: String!
+  degree: String!
+  graduationDate: AWSDate!
+  isCurrentStudent: Boolean!
+}
+
+type WorkExperience {
+  id: ID!
+  startDate: AWSDate!
+  endDate: AWSDate
+  isCurrentJob: Boolean
+  title: String!
+  company: String!
+}
+
+type Job @model {
+  id: ID!
+  poster: User! @connection
+  professionalClass: ProfessionalClass!
+  startDate: String!
+  endDate: String!
+  statTime: String!
+  endTime: String!
+  status: String!
+  applications: [User!]! @connection
+  hired: User @connection
+  cost: Int!
+}
+
+enum UserClass {
+  Facility
+  Professional
+}
+
+enum ProfessionalClass {
+  DentalHygienist
+  DentalAssistant
+  RegisteredDentalAssistant
+  RegisteredDentalAssistantExtendedFunction
+  Dentist
+}
+
+enum OnboardStatus {
+  Unconfirmed
+  Onboarding
+  Unverified
+  Finished
+}
+
+interface Profile {
+  id: ID!
+  user: User!
+  rating: Float
+  reviews: [Review!]!
+  isVerified: Boolean!
+}
+
+type Review @model {
+  id: ID!
+  author: User! @connection
+  posting: Job! @connection
+  rating: Int!
+  highlights: [String!]
+  description: String!
+}
+
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  email: String!
+  phone: String!
+  address: String
+  zipcode: Int!
+  OnboardStatus: OnboardStatus!
+  city: String
+  state: String
+  picture: S3Object
+  userClass: UserClass!
+  facilityProfile: FacilityProfile @connection(name: "FacilityUser")
+  professionalProfile: ProfessionalProfile @connection(name: "ProfessionalUser")
+  credentialName: Credential @connection
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}

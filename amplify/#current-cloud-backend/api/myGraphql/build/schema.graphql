@@ -1,0 +1,668 @@
+type Credential {
+  user: User!
+  id: ID!
+  credentialName: String!
+  isVerified: Boolean!
+  expierationDate: AWSDate!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type FacilityProfile {
+  id: ID!
+  user: User!
+  about: String!
+  rating: Float!
+  license: String!
+  jobs(filter: ModelJobFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelJobConnection
+  reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
+  practiceName: String!
+  isVerified: Boolean!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ProfessionalProfile {
+  id: ID!
+  user: User!
+  firstName: String!
+  lastName: String!
+  yearsOfExperience: Int!
+  workExperience: [WorkExperience!]!
+  education: [Education!]!
+  rating: Float!
+  credentials: [Credential!]!
+  jobs(filter: ModelJobFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelJobConnection
+  reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
+  isVerified: Boolean!
+  specialties: [String!]!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Education {
+  id: ID!
+  school: String!
+  degree: String!
+  graduationDate: AWSDate!
+  isCurrentStudent: Boolean!
+}
+
+type WorkExperience {
+  id: ID!
+  startDate: AWSDate!
+  endDate: AWSDate
+  isCurrentJob: Boolean
+  title: String!
+  company: String!
+}
+
+type Job {
+  id: ID!
+  poster: User!
+  professionalClass: ProfessionalClass!
+  startDate: String!
+  endDate: String!
+  statTime: String!
+  endTime: String!
+  status: String!
+  applications(filter: ModelUserFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUserConnection
+  hired: User
+  cost: Int!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum UserClass {
+  Facility
+  Professional
+}
+
+enum ProfessionalClass {
+  DentalHygienist
+  DentalAssistant
+  RegisteredDentalAssistant
+  RegisteredDentalAssistantExtendedFunction
+  Dentist
+}
+
+enum OnboardStatus {
+  Unconfirmed
+  Onboarding
+  Unverified
+  Finished
+}
+
+interface Profile {
+  id: ID!
+  user: User!
+  rating: Float
+  reviews: [Review!]!
+  isVerified: Boolean!
+}
+
+type Review {
+  id: ID!
+  author: User!
+  posting: Job!
+  rating: Int!
+  highlights: [String!]
+  description: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type User {
+  id: ID!
+  email: String!
+  phone: String!
+  address: String
+  zipcode: Int!
+  OnboardStatus: OnboardStatus!
+  city: String
+  state: String
+  picture: S3Object
+  userClass: UserClass!
+  facilityProfile: FacilityProfile
+  professionalProfile: ProfessionalProfile
+  credentialName: Credential
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCredentialConnection {
+  items: [Credential]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelCredentialFilterInput {
+  id: ModelIDInput
+  credentialName: ModelStringInput
+  isVerified: ModelBooleanInput
+  expierationDate: ModelStringInput
+  and: [ModelCredentialFilterInput]
+  or: [ModelCredentialFilterInput]
+  not: ModelCredentialFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getCredential(id: ID!): Credential
+  listCredentials(filter: ModelCredentialFilterInput, limit: Int, nextToken: String): ModelCredentialConnection
+  getFacilityProfile(id: ID!): FacilityProfile
+  listFacilityProfiles(filter: ModelFacilityProfileFilterInput, limit: Int, nextToken: String): ModelFacilityProfileConnection
+  getProfessionalProfile(id: ID!): ProfessionalProfile
+  listProfessionalProfiles(filter: ModelProfessionalProfileFilterInput, limit: Int, nextToken: String): ModelProfessionalProfileConnection
+  getJob(id: ID!): Job
+  listJobs(filter: ModelJobFilterInput, limit: Int, nextToken: String): ModelJobConnection
+  getReview(id: ID!): Review
+  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+}
+
+input CreateCredentialInput {
+  id: ID
+  credentialName: String!
+  isVerified: Boolean!
+  expierationDate: AWSDate!
+  credentialUserId: ID!
+}
+
+input UpdateCredentialInput {
+  id: ID!
+  credentialName: String
+  isVerified: Boolean
+  expierationDate: AWSDate
+  credentialUserId: ID
+}
+
+input DeleteCredentialInput {
+  id: ID
+}
+
+type Mutation {
+  createCredential(input: CreateCredentialInput!, condition: ModelCredentialConditionInput): Credential
+  updateCredential(input: UpdateCredentialInput!, condition: ModelCredentialConditionInput): Credential
+  deleteCredential(input: DeleteCredentialInput!, condition: ModelCredentialConditionInput): Credential
+  createFacilityProfile(input: CreateFacilityProfileInput!, condition: ModelFacilityProfileConditionInput): FacilityProfile
+  updateFacilityProfile(input: UpdateFacilityProfileInput!, condition: ModelFacilityProfileConditionInput): FacilityProfile
+  deleteFacilityProfile(input: DeleteFacilityProfileInput!, condition: ModelFacilityProfileConditionInput): FacilityProfile
+  createProfessionalProfile(input: CreateProfessionalProfileInput!, condition: ModelProfessionalProfileConditionInput): ProfessionalProfile
+  updateProfessionalProfile(input: UpdateProfessionalProfileInput!, condition: ModelProfessionalProfileConditionInput): ProfessionalProfile
+  deleteProfessionalProfile(input: DeleteProfessionalProfileInput!, condition: ModelProfessionalProfileConditionInput): ProfessionalProfile
+  createJob(input: CreateJobInput!, condition: ModelJobConditionInput): Job
+  updateJob(input: UpdateJobInput!, condition: ModelJobConditionInput): Job
+  deleteJob(input: DeleteJobInput!, condition: ModelJobConditionInput): Job
+  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review
+  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review
+  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+}
+
+input ModelCredentialConditionInput {
+  credentialName: ModelStringInput
+  isVerified: ModelBooleanInput
+  expierationDate: ModelStringInput
+  and: [ModelCredentialConditionInput]
+  or: [ModelCredentialConditionInput]
+  not: ModelCredentialConditionInput
+}
+
+type Subscription {
+  onCreateCredential: Credential @aws_subscribe(mutations: ["createCredential"])
+  onUpdateCredential: Credential @aws_subscribe(mutations: ["updateCredential"])
+  onDeleteCredential: Credential @aws_subscribe(mutations: ["deleteCredential"])
+  onCreateFacilityProfile: FacilityProfile @aws_subscribe(mutations: ["createFacilityProfile"])
+  onUpdateFacilityProfile: FacilityProfile @aws_subscribe(mutations: ["updateFacilityProfile"])
+  onDeleteFacilityProfile: FacilityProfile @aws_subscribe(mutations: ["deleteFacilityProfile"])
+  onCreateProfessionalProfile: ProfessionalProfile @aws_subscribe(mutations: ["createProfessionalProfile"])
+  onUpdateProfessionalProfile: ProfessionalProfile @aws_subscribe(mutations: ["updateProfessionalProfile"])
+  onDeleteProfessionalProfile: ProfessionalProfile @aws_subscribe(mutations: ["deleteProfessionalProfile"])
+  onCreateJob: Job @aws_subscribe(mutations: ["createJob"])
+  onUpdateJob: Job @aws_subscribe(mutations: ["updateJob"])
+  onDeleteJob: Job @aws_subscribe(mutations: ["deleteJob"])
+  onCreateReview: Review @aws_subscribe(mutations: ["createReview"])
+  onUpdateReview: Review @aws_subscribe(mutations: ["updateReview"])
+  onDeleteReview: Review @aws_subscribe(mutations: ["deleteReview"])
+  onCreateUser(owner: String!): User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser(owner: String!): User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser(owner: String!): User @aws_subscribe(mutations: ["deleteUser"])
+}
+
+type ModelFacilityProfileConnection {
+  items: [FacilityProfile]
+  nextToken: String
+}
+
+input ModelFacilityProfileFilterInput {
+  id: ModelIDInput
+  about: ModelStringInput
+  rating: ModelFloatInput
+  license: ModelStringInput
+  practiceName: ModelStringInput
+  isVerified: ModelBooleanInput
+  and: [ModelFacilityProfileFilterInput]
+  or: [ModelFacilityProfileFilterInput]
+  not: ModelFacilityProfileFilterInput
+}
+
+input CreateFacilityProfileInput {
+  id: ID
+  about: String!
+  rating: Float!
+  license: String!
+  practiceName: String!
+  isVerified: Boolean!
+  facilityProfileUserId: ID!
+}
+
+input UpdateFacilityProfileInput {
+  id: ID!
+  about: String
+  rating: Float
+  license: String
+  practiceName: String
+  isVerified: Boolean
+  facilityProfileUserId: ID
+}
+
+input DeleteFacilityProfileInput {
+  id: ID
+}
+
+input ModelFacilityProfileConditionInput {
+  about: ModelStringInput
+  rating: ModelFloatInput
+  license: ModelStringInput
+  practiceName: ModelStringInput
+  isVerified: ModelBooleanInput
+  and: [ModelFacilityProfileConditionInput]
+  or: [ModelFacilityProfileConditionInput]
+  not: ModelFacilityProfileConditionInput
+}
+
+input WorkExperienceInput {
+  id: ID!
+  startDate: AWSDate!
+  endDate: AWSDate
+  isCurrentJob: Boolean
+  title: String!
+  company: String!
+}
+
+input EducationInput {
+  id: ID!
+  school: String!
+  degree: String!
+  graduationDate: AWSDate!
+  isCurrentStudent: Boolean!
+}
+
+type ModelProfessionalProfileConnection {
+  items: [ProfessionalProfile]
+  nextToken: String
+}
+
+input ModelProfessionalProfileFilterInput {
+  id: ModelIDInput
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  yearsOfExperience: ModelIntInput
+  rating: ModelFloatInput
+  isVerified: ModelBooleanInput
+  specialties: ModelStringInput
+  and: [ModelProfessionalProfileFilterInput]
+  or: [ModelProfessionalProfileFilterInput]
+  not: ModelProfessionalProfileFilterInput
+}
+
+input CreateProfessionalProfileInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  yearsOfExperience: Int!
+  workExperience: [WorkExperienceInput!]!
+  education: [EducationInput!]!
+  rating: Float!
+  isVerified: Boolean!
+  specialties: [String!]!
+  professionalProfileUserId: ID!
+}
+
+input UpdateProfessionalProfileInput {
+  id: ID!
+  firstName: String
+  lastName: String
+  yearsOfExperience: Int
+  workExperience: [WorkExperienceInput!]
+  education: [EducationInput!]
+  rating: Float
+  isVerified: Boolean
+  specialties: [String!]
+  professionalProfileUserId: ID
+}
+
+input DeleteProfessionalProfileInput {
+  id: ID
+}
+
+input ModelProfessionalProfileConditionInput {
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  yearsOfExperience: ModelIntInput
+  rating: ModelFloatInput
+  isVerified: ModelBooleanInput
+  specialties: ModelStringInput
+  and: [ModelProfessionalProfileConditionInput]
+  or: [ModelProfessionalProfileConditionInput]
+  not: ModelProfessionalProfileConditionInput
+}
+
+type ModelJobConnection {
+  items: [Job]
+  nextToken: String
+}
+
+input ModelProfessionalClassInput {
+  eq: ProfessionalClass
+  ne: ProfessionalClass
+}
+
+input ModelJobFilterInput {
+  id: ModelIDInput
+  professionalClass: ModelProfessionalClassInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  statTime: ModelStringInput
+  endTime: ModelStringInput
+  status: ModelStringInput
+  cost: ModelIntInput
+  and: [ModelJobFilterInput]
+  or: [ModelJobFilterInput]
+  not: ModelJobFilterInput
+}
+
+input CreateJobInput {
+  id: ID
+  professionalClass: ProfessionalClass!
+  startDate: String!
+  endDate: String!
+  statTime: String!
+  endTime: String!
+  status: String!
+  cost: Int!
+  facilityProfileJobsId: ID
+  professionalProfileJobsId: ID
+  jobPosterId: ID!
+  jobHiredId: ID
+}
+
+input UpdateJobInput {
+  id: ID!
+  professionalClass: ProfessionalClass
+  startDate: String
+  endDate: String
+  statTime: String
+  endTime: String
+  status: String
+  cost: Int
+  facilityProfileJobsId: ID
+  professionalProfileJobsId: ID
+  jobPosterId: ID
+  jobHiredId: ID
+}
+
+input DeleteJobInput {
+  id: ID
+}
+
+input ModelJobConditionInput {
+  professionalClass: ModelProfessionalClassInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  statTime: ModelStringInput
+  endTime: ModelStringInput
+  status: ModelStringInput
+  cost: ModelIntInput
+  and: [ModelJobConditionInput]
+  or: [ModelJobConditionInput]
+  not: ModelJobConditionInput
+}
+
+type ModelReviewConnection {
+  items: [Review]
+  nextToken: String
+}
+
+input ModelReviewFilterInput {
+  id: ModelIDInput
+  rating: ModelIntInput
+  highlights: ModelStringInput
+  description: ModelStringInput
+  and: [ModelReviewFilterInput]
+  or: [ModelReviewFilterInput]
+  not: ModelReviewFilterInput
+}
+
+input CreateReviewInput {
+  id: ID
+  rating: Int!
+  highlights: [String!]
+  description: String!
+  facilityProfileReviewsId: ID
+  professionalProfileReviewsId: ID
+  reviewAuthorId: ID!
+  reviewPostingId: ID!
+}
+
+input UpdateReviewInput {
+  id: ID!
+  rating: Int
+  highlights: [String!]
+  description: String
+  facilityProfileReviewsId: ID
+  professionalProfileReviewsId: ID
+  reviewAuthorId: ID
+  reviewPostingId: ID
+}
+
+input DeleteReviewInput {
+  id: ID
+}
+
+input ModelReviewConditionInput {
+  rating: ModelIntInput
+  highlights: ModelStringInput
+  description: ModelStringInput
+  and: [ModelReviewConditionInput]
+  or: [ModelReviewConditionInput]
+  not: ModelReviewConditionInput
+}
+
+input S3ObjectInput {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type ModelUserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input ModelOnboardStatusInput {
+  eq: OnboardStatus
+  ne: OnboardStatus
+}
+
+input ModelUserClassInput {
+  eq: UserClass
+  ne: UserClass
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  email: ModelStringInput
+  phone: ModelStringInput
+  address: ModelStringInput
+  zipcode: ModelIntInput
+  OnboardStatus: ModelOnboardStatusInput
+  city: ModelStringInput
+  state: ModelStringInput
+  userClass: ModelUserClassInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input CreateUserInput {
+  id: ID
+  email: String!
+  phone: String!
+  address: String
+  zipcode: Int!
+  OnboardStatus: OnboardStatus!
+  city: String
+  state: String
+  picture: S3ObjectInput
+  userClass: UserClass!
+  jobApplicationsId: ID
+  userFacilityProfileId: ID
+  userProfessionalProfileId: ID
+  userCredentialNameId: ID
+}
+
+input UpdateUserInput {
+  id: ID!
+  email: String
+  phone: String
+  address: String
+  zipcode: Int
+  OnboardStatus: OnboardStatus
+  city: String
+  state: String
+  picture: S3ObjectInput
+  userClass: UserClass
+  jobApplicationsId: ID
+  userFacilityProfileId: ID
+  userProfessionalProfileId: ID
+  userCredentialNameId: ID
+}
+
+input DeleteUserInput {
+  id: ID
+}
+
+input ModelUserConditionInput {
+  email: ModelStringInput
+  phone: ModelStringInput
+  address: ModelStringInput
+  zipcode: ModelIntInput
+  OnboardStatus: ModelOnboardStatusInput
+  city: ModelStringInput
+  state: ModelStringInput
+  userClass: ModelUserClassInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
