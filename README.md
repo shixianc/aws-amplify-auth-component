@@ -1,4 +1,4 @@
-<img src="https://github.com/shixianc/aws-amplify-auth-component/blob/master/img/UI-update-v1.0.png" width="800">
+<img src="https://github.com/shixianc/aws-amplify-auth-component/blob/master/img/UI-update-v1.0.png" width="500">
 # Customizable Authentication Component Prototype
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com/)
 
@@ -81,10 +81,9 @@ Amplify.configure({
 ```
 
 One issue to keep in mind is that, the standard attributes cannot be changed once created. However, we can add more cutomized attributes. <br />
-<img src="https://github.com/helloflexy/poc-authentication/blob/master/img/Screen%20Shot%202020-05-22%20at%205.15.24%20PM.png" width="600"> <br/><br /><br />
+<img src="hhttps://github.com/shixianc/aws-amplify-auth-component/blob/master/img/Screen%20Shot%202020-05-22%20at%205.15.24%20PM.png" width="600"> <br/><br /><br />
 
 ## 3. Lambda Triggers on Node.js
-<br />
 
 ### - 3.1 Why should we use Lambda Triggers ?
 Lambda Triggers are some functions saved on the AWS backend running on Node.js. They are called automatically by AWS Amplify under certain conditions. In this article, we mainly use 2 triggers: 
