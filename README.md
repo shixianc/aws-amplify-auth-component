@@ -1,7 +1,10 @@
 <img src="https://github.com/shixianc/aws-amplify-auth-component/blob/master/img/UI-update-v1.0.png" width="500">
 # Customizable Authentication Component Prototype <br />
+
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com).
+
 My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
+
 ### This ducoment describes the development and deployment of the customized Amplify Authentication with multiple user types using Amplify and Cognito.<br /><br /><br />
 ### Table of contents:
 * Work Flow of the current Auth component and how to use the prototype
