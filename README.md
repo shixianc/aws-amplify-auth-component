@@ -1,3 +1,4 @@
+<img src="https://github.com/shixianc/aws-amplify-auth-component/blob/master/img/UI-update-v1.0.png" width="800">
 # Customizable Authentication Component Prototype
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com/)
 
@@ -21,7 +22,7 @@ This Authentication demo has 7 main React Components:
 - LoginMsg.js
 - Signin.js
 ###### Navigation flow will be implemented with React Routers. <br /><br />
-<img src="https://github.com/helloflexy/poc-authentication/blob/master/img/hf_auth_flow.png" width="800"> <br/>
+<img src="https://github.com/shixianc/aws-amplify-auth-component/blob/master/img/hf_auth_flow.png" width="800"> <br/>
 
 To test out the Demo prototype, few extra step to take before using:
 1. Open broswer inspect to monitor any errors.
@@ -84,7 +85,6 @@ One issue to keep in mind is that, the standard attributes cannot be changed onc
 
 ## 3. Lambda Triggers on Node.js
 <br />
-<img src="https://docs.aws.amazon.com/cognito/latest/developerguide/images/scenario-appsync.png" 
 
 ### - 3.1 Why should we use Lambda Triggers ?
 Lambda Triggers are some functions saved on the AWS backend running on Node.js. They are called automatically by AWS Amplify under certain conditions. In this article, we mainly use 2 triggers: 
