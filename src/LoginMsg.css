@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  max-width: 500px;
+  padding: 0px;
+  margin: auto;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.container header {
+  text-align: center;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.container .sub-header {
+  text-align: left;
+  font-style: normal;
+  font-weight: bold;
+}

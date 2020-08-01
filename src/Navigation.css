@@ -1,0 +1,20 @@
+.navbar {
+  font-family: 'Pacifico', cursive !important;
+}
+
+.navbar .navbar-brand {
+  font-weight: regular !important;
+  font-size: 40px !important;
+  margin-left: 300px;
+  color: #143f6e;
+}
+
+.navbar .navbar-brand:hover {
+  color: #143f6e;
+}
+
+.navbar .nav {
+  margin-right: 300px;
+  font-family: 'Fira Sans', sans-serif;
+  color: #fd7468 !important;
+}

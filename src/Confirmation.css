@@ -1,0 +1,33 @@
+.form-confirm {
+  width: 100%;
+  max-width: 500px;
+  padding: 0px;
+  margin: auto;
+  font-family: 'Fira Sans', sans-serif !important;
+}
+
+h1 {
+  text-align: left;
+}
+
+h6 {
+  text-align: left;
+}
+
+.form-resend-link {
+  /* background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; */
+  margin-left: 5px;
+  color: #143f6e;
+  text-decoration: underline;
+}
+
+.form-signin .btn {
+  border-radius: 10px;
+  font: bold;
+  width: 100%;
+  background-color: #fd7468;
+  border-color: #fd7468;
+}

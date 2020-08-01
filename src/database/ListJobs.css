@@ -1,0 +1,67 @@
+.form-signin {
+  width: 100%;
+  max-width: 500px;
+  padding: 0px;
+  margin: auto;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.badge {
+  font-size: 14px;
+  width: 75px;
+  border-radius: 10px;
+  margin-left: 60px;
+}
+
+.form-signin .card {
+  text-align: left;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.form-signin .form-label {
+  text-align: left;
+}
+
+.form-signin .form-control {
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  color: #333333;
+}
+
+.form-signin .btn {
+  border-radius: 10px;
+  font: bold;
+  width: 100%;
+  background-color: #fd7468;
+  border-color: #fd7468;
+}
+
+.form-signin .form-forgot-link {
+  float: right;
+  display: block;
+  color: #143f6e;
+}
+
+.form-signin .form-signup-link {
+  text-align: center;
+  display: inline-block;
+  margin: 5px;
+  color: #143f6e;
+}
+
+.btn {
+  text-align: center;
+  border-radius: 10px;
+  font: bold;
+  width: 500px;
+  background-color: #fd7468;
+  border-color: #fd7468;
+}

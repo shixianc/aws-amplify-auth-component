@@ -1,0 +1,40 @@
+.form-signin {
+  width: 100%;
+  max-width: 500px;
+  padding: 0px;
+  margin: auto;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.form-signin .form-signup-link {
+  text-decoration: underline;
+}
+
+.form-signin .form-header {
+  text-align: left;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.form-signin .form-label {
+  text-align: left;
+}
+
+.form-signin .form-control {
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  color: #333333;
+}
+
+.form-signin .btn {
+  border-radius: 10px;
+  font: bold;
+  width: 100%;
+  background-color: #fd7468;
+  border-color: #fd7468;
+}
