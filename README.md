@@ -1,5 +1,4 @@
-<img src="https://github.com/helloflexy/poc-authentication/blob/master/img/UI-update-v1.0.png" width="800"> <br/>
-# HelloFlexy Authentication Component Prototype
+# Customizable Authentication Component Prototype
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com/)
 
 ### This ducoment describes the development and deployment of the customized Amplify Authentication with Cognito User Pool.<br /><br /><br />
@@ -159,12 +158,4 @@ exports.handler = (event, context, callback) => {
 Lambda triggers are useful and gives more potential for future development. However, how do we debug it from server side? 
 One way to debug it is from Lambda Console. It allows you to customize Test cases and get real time results. But in particular cases, it cannot catch problems in real test cases. 
 Another way to debug is by setting console.log(...) in the lambda triggers just as we usually debug in our IDE. But to find the backend console is a bit trickier. We need to click the log file from: **Lambda Console -> Monitoring -> Scroll down to find "Cloud Watch Logs Insights" -> recent invocations -> click on the most recent log file** Note: it might take a few minutes for the most recent log file to show up. 
-
-
-<br /><br /><br />
-## 4. Existing Problems
-
-* Error Message Handler need to be implemented, such like "incorrect password", "password has to be at least 8 characters!".
-* Need to check if the current **email or Phone number** has already been registered. Because if we are using UserName to signin, normal auth flow will not detect duplicate phone numbers/ emails. This can be disaster if a person wants to reset the password with this duplicate email. One way to solve is use Pre-Signup Lambda Trigger to check if already exists. Another possible approach is using GraphQL database query to check duplicate. Will be added soon.
-* Routers for navigation flow 
 
