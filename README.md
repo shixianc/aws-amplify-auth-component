@@ -1,4 +1,4 @@
-# HelloFlexy Authentication Component Prototype
+# Customizable Authentication Component Prototype
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com/)
 
 ### This ducoment describes the development and deployment of the customized Amplify Authentication with Cognito User Pool.<br /><br /><br />
