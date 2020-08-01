@@ -3,8 +3,6 @@
 
 [-> Click to see the Demo <-](https://master.d38jixybioco37.amplifyapp.com).
 
-My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
-
 ### This ducoment describes the development and deployment of the customized Amplify Authentication with multiple user types using Amplify and Cognito.<br /><br /><br />
 ### Table of contents:
 * Work Flow of the current Auth component and how to use the prototype
@@ -19,7 +17,7 @@ My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
 This Authentication demo has 7 main React Components:
 - App.js
 - UserTypeB.js
-- UserTypeA.js    (should come up a better naming to match AuthDental)
+- UserTypeA.js    
 - ChangePassword.js
 - ForgotPassword.js
 - LoginMsg.js
@@ -62,7 +60,7 @@ currentAuthenticatedUser(params?: CurrentUserOpts): Promise<CognitoUser | any>
 <br /><br /><br /><br />
 ## 2. Configuration for Frontend and Backend
 
-By setting up Cognito User Pool, we are able to create, edit and maintain users and groups in a centralized place. We can have different applications connecting and re-using the same User Pool by adding the following configuration to "index.js" file. Another advantage is that, team may expand the business beyond dental facility and it provides this flexibility in the future. By adding Groups to the same user pool, we can create more account types, such like Layers, drivers, etc. to fullfil custmoized needs for both users and developers. And most importantly team only needs to maintain one central user pool. 
+By setting up Cognito User Pool, we are able to create, edit and maintain users and groups in a centralized place. We can have different applications connecting and re-using the same User Pool by adding the following configuration to "index.js" file. Another advantage is that, team may expand the business beyond currrent user base and it provides this flexibility in the future. By adding Groups to the same user pool, we can create more account types, such like Layers, drivers, etc. to fullfil custmoized needs for both users and developers. And most importantly team only needs to maintain one central user pool. 
 
 ###### note: parameters below can be found in Cognito user pool home page.
 ```JavaScript 
@@ -95,7 +93,7 @@ Lambda Triggers are some functions saved on the AWS backend running on Node.js. 
 
 With this two functions, we are able to achieve -> 
 1. automatically confirm users without them verifying email or phone number. This is crucial because Cognito explicitly require at lease one contact information must be verified in order to reset password. 
-2. automatically assign users to according groups. In our case, either Dentists or Hygeniests. This solves the problem that we need to find a way to create different type of users. There is another workaround to achieve this without Lambda Trigger. Client can initiate a HTTP POST request to the server API asking to be assigned to some groups. One problem I find is that if error occurs on client side, group cannot be assigned and that will affect later user interface rendering correctly. Lambda function is run on AWS and should be stable and reliable. Triggers setting can also be found in User Pool settings so it is easy to maintain and monitor. 
+2. automatically assign users to according groups. In our case, either GroupA or GroupB. This solves the problem that we need to find a way to create different type of users. There is another workaround to achieve this without Lambda Trigger. Client can initiate a HTTP POST request to the server API asking to be assigned to some groups. One problem I find is that if error occurs on client side, group cannot be assigned and that will affect later user interface rendering correctly. Lambda function is run on AWS and should be stable and reliable. Triggers setting can also be found in User Pool settings so it is easy to maintain and monitor. 
 
 ```JavaScript 
 exports.handler = (event, context, callback) => {
